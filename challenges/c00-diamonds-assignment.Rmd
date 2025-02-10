@@ -89,10 +89,7 @@ diamonds %>%
 ```
 
 **Observations**:
-
-I noticed that while the visual does show every variable, it is not very effective in conveying information. 
-This is because all of the symbols overlap with one another to the point that you cannot see the cut of most of them. 
-
+I noticed that cut doesn't have a strong correlation with price or carat, and that most cuts seem to be Ideal or Premium.
 # Communication
 <!-- -------------------------------------------------- -->
 

@@ -14,7 +14,6 @@ Getting Started: Diamonds
     and `cut` simultaneously. Experiment with which variable you assign
     to which aesthetic (`x`, `y`, etc.) to find an effective
     visual.](#q2-create-a-visualization-showing-variables-carat-price-and-cut-simultaneously-experiment-with-which-variable-you-assign-to-which-aesthetic-x-y-etc-to-find-an-effective-visual)
-- [Communication](#communication)
   - [**q3** *Knit* your document in order to create a
     report.](#q3-knit-your-document-in-order-to-create-a-report)
   - [**q4** *Push* your knitted document to
@@ -134,15 +133,9 @@ diamonds %>%
 
 ![](c00-diamonds-assignment_files/figure-gfm/q2-task-1.png)<!-- -->
 
-**Observations**:
-
-I noticed that while the visual does show every variable, it is not very
-effective in conveying information. This is because all of the symbols
-overlap with one another to the point that you cannot see the cut of
-most of them.
-
-# Communication
-
+**Observations**: I noticed that cut doesn’t have a strong correlation
+with price or carat, and that most cuts seem to be Ideal or Premium. \#
+Communication
 <!-- -------------------------------------------------- -->
 
 In this next stage, you will render your data exploration, push it to
