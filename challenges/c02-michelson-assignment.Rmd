@@ -1,7 +1,7 @@
 ---
 title: "Michelson Speed-of-light Measurements"
-author: "(Your name here)"
-date: 2020-
+author: Olivia Smith
+date: 2/13/2025
 output: 
   github_document:
     toc: true
@@ -85,7 +85,11 @@ df_michelson %>% glimpse()
 
 ```{r q1-task}
 ## TODO: Compute summaries
-df_q1 <- NA
+df_q1 <- 
+  df_michelson %>%  
+  group_by(Distinctness) %>% 
+  summarize(n = n(), MeanVelocity = mean(Velocity))
+
 df_q1 %>%
   arrange(desc(Distinctness)) %>%
   knitr::kable()
@@ -93,10 +97,11 @@ df_q1 %>%
 
 **Observations**:
 - Write your observations here!
-  - (Your response here)
+  - I noticed that most of the distinctness values are '3', and the least by a wide margin are '1'. I also noticed that the mean velocities from the 2 and 3 distinctness values are very close, while the mean velocity from distinctness value 3 is comparitively far off. 
+  
 - Why might your table differ from Michelson's?
-  - (Your response here)
-
+  - Perhaps Michelson wanted to stick to 5 significant figures for clarity, while my table has 7 significant figures.
+  
 The `Velocity` values in the dataset are the speed of light *in air*; Michelson
 introduced a couple of adjustments to estimate the speed of light in a vacuum.
 In total, he added $+92$ km/s to his mean estimate for `VelocityVacuum` (from
@@ -108,7 +113,9 @@ observations in the dataset.
 
 ```{r q2-task}
 ## TODO: Adjust the data, assign to df_q2
-df_q2 <- NA
+df_q2 <- 
+  df_michelson %>% 
+    mutate(VelocityVacuum = Velocity + 92)
 
 df_q2
 ```
@@ -137,13 +144,25 @@ problems uncertainty includes some amount of human judgment.[2]
 ```{r q3-task}
 ## TODO: Compare Michelson's estimate and error against the true value
 ## Your code here!
+
+# # Parameters
+# LIGHTSPEED_VACUUM    <- 299792.458 # Exact speed of light in a vacuum (km / s)
+# LIGHTSPEED_MICHELSON <- 299944.00  # Michelson's speed estimate (km / s)
+# LIGHTSPEED_PM        <- 51         # Michelson error estimate (km / s)
+
+abs(LIGHTSPEED_MICHELSON - LIGHTSPEED_VACUUM) < LIGHTSPEED_PM
+
+abs(LIGHTSPEED_MICHELSON - LIGHTSPEED_VACUUM) - LIGHTSPEED_PM
+
+
 ```
 
 **Observations**:
 - Is Michelson's estimate of the error (his uncertainty) greater or less than the true error?
-  - (Your response here)
+  - Michelson's estimate of his error is less than the true error.
+  
 - Make a quantitative comparison between Michelson's uncertainty and his error.
-  - (Your response here)
+  - Michelson's uncertainty was about 100.542 km/s away from the actual error. 
 
 The following plot shows all of Michelson's data as a [control chart](https://en.wikipedia.org/wiki/Control_chart); this sort of plot is common in manufacturing, where it is used to help determine if a manufacturing process is under [statistical control](https://en.wikipedia.org/wiki/Statistical_process_control). Each dot is one of Michelson's measurements, and the grey line connects the mean taken for each day. The same plot also shows simulated data using a probability model. We'll get into statistics later in the course; for now, let's focus on understanding what real and simulated data tend to look like.
 
@@ -208,16 +227,57 @@ df_q2 %>%
 
 **Observations**:
 Similarities
-- (your responses here)
+- The real and simulated data has similar locations for peaks and drops.
+- The real and simulated data have similar amounts of data spread
+- Both data sets peak at around the same value
+
 Differences
-- (your responses here)
+- The real data has more intense peaks and drops than the simulated data.
+- The simulated data stays closer to Michelson's estimate. 
+- The Real data peaks at a lower value than the simulated data. 
+
 
 ### __q5__ You have access to a few other variables. Construct a **at least three** visualizations of `VelocityVacuum` against these other factors. Are there other patterns in the data that might help explain the difference between Michelson's estimate and `LIGHTSPEED_VACUUM`?
 
+```{r}
+glimpse(df_q2)
+
+df_q2 %>% 
+  group_by(Temp) %>% 
+  ggplot() + 
+  aes(Temp, VelocityVacuum) +
+  geom_point() +
+  ggtitle("Velocity in a Vacuum vs. Temperature")
+
+df_q2 %>% 
+  ggplot(aes(x = VelocityVacuum, color = Distinctness)) +
+  geom_bar() +
+  ggtitle("Velocity in a Vacuum Count/Distinctness")
+
+df_q2 %>% 
+  ggplot(aes(x = Date, y = VelocityVacuum, color = Temp)) + 
+  geom_point() +
+  ggtitle("Velocity in a Vacuum vs. Date")
+
+
+
+```
+
+
+
 **Observations**:
 
-- Make sure to record observations on your graphs!
+Velocity in a Vacuum vs. Date
+- Temperatures in a singular day vary more than I thought they would, but still are of similar values.
+- There may be a loose correlation between temperature and velocity
 
+Velocity in a Vacuum Count/Distinctness
+- Higher velocity measurements tend to be 2 and 3 level distinctness.
+- 1 is the least common distinctness value
+
+Velocity in a Vacuum vs. Temperature. 
+- The peak velocity measurement occurs in the middle of the temperature values
+- However, the lowest velocity measurement occurs at the lower end of the temperature range
 
 
 ## Bibliography
