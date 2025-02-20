@@ -67,9 +67,17 @@ Note that these data are not tidy! The data in this form are convenient for repo
 ```{r q1-task}
 ## TASK: Tidy `df_stang`
 df_stang_long <-
-  df_stang
+    df_stang %>% 
+    pivot_longer(
+      cols = c("E_00", "nu_00", "E_45", "nu_45", "E_90", "nu_90"),
+      names_to = c(".value", "angle"),
+      names_sep = "_",
+    ) %>% 
+    mutate(angle = as.integer(angle)) %>% 
+    filter(E > 0)
 
 df_stang_long
+    
 ```
 
 Use the following tests to check your work.
@@ -103,19 +111,25 @@ print("Very good!")
 
 ```{r q2-task}
 ##
+glimpse(df_stang_long)
+
 ```
 
 **Observations**:
 
 - Is there "one true value" for the material properties of Aluminum?
-  - (Your response here)
+  - No, the values all hover around the same threshold but are not the same
+  
 - How many aluminum alloys are in this dataset? How do you know?
-  - (Your response here)
+  - All of the alloys are 8 alloys in this dataset after filtering. I know because there are 8 sets of data for each column.
+  
 - What angles were tested?
-  - (Your response here)
+  - 0 degrees, 45 degrees, and 90 degrees. 
+  
 - What thicknesses were tested?
-  - (Your response here)
-- (Write your own question here)
+  - .022, .032, .064, .081
+  
+- What angle has the most variation in E value?
 
 ## Visualize
 <!-- ------------------------- -->
@@ -124,11 +138,15 @@ print("Very good!")
 
 ```{r q3-task}
 ## TASK: Investigate your question from q1 here
+df_stang_long %>% 
+  ggplot(aes(x = as.character(angle), y = E)) +
+  geom_boxplot()
+
 ```
 
 **Observations**:
 
-- (Address your question from q1 here)
+- 90 degrees seems to have the most variation in E value.
 
 ### __q4__ Consider the following statement:
 
@@ -148,9 +166,9 @@ df_stang_long %>%
 **Observations**:
 
 - Does this graph support or contradict the claim above?
-  - (Your response here)
+  - This graph does not support the claim above, as every thickness value is huddled around the same E/nu value. In fact, the highest thickness seems to be at the lower of the grouping. 
 - Is this evidence *conclusive* one way or another?
-  - (Your response here)
+  - This evidence is not conclusive, as we may need more data points and information on the material makeup of each of the plates to draw a more nuanced conclusion. 
 
 # References
 <!-- -------------------------------------------------- -->
