@@ -1,7 +1,7 @@
 RMS Titanic
 ================
-(Your name here)
-2020-
+Olivia Smith
+3/3/2025
 
 - [Grading Rubric](#grading-rubric)
   - [Individual](#individual)
@@ -148,7 +148,8 @@ df_titanic %>% summarize(total = sum(n))
 ``` r
 ## TASK: Visualize counts against `Class` and `Sex`
 survivors <- df_titanic %>% filter(Survived == "Yes")
-ggplot(survivors, aes(fill = Sex, x = Class, y = n)) +
+survivors %>% 
+  ggplot(aes(fill = Sex, x = Class, y = n)) +
   geom_col(position = "Stack")
 ```
 
@@ -204,39 +205,36 @@ df_prop
 ### **q4** Replicate your visual from q3, but display `Prop` in place of `n`. Document your observations, and note any new/different observations you make in comparison with q3. Is there anything *fishy* in your plot?
 
 ``` r
-survivors <- df_titanic %>% 
-  filter(Survived == "Yes") %>% 
-  group_by(Sex, Class)  %>% 
-    mutate(
-    Total = sum(n),
-    Prop = n / Total
-  )
+# survivors <- 
+#   df_titanic %>% 
+#   group_by(Sex, Class)  %>% 
+#   mutate(
+#     Total = sum(n),
+#     Prop = n / Total
+#   ) %>% 
+#   filter(Survived == "Yes")
 
-ggplot(survivors, aes(fill = Sex, x = Class, y = Prop)) +
+
+# survivors %>% 
+df_prop %>%
+  ggplot(aes(fill = Sex, x = Class, y = Prop)) +
   geom_col(position = "Dodge")
 ```
+
+    ## Warning: Removed 4 rows containing missing values or values outside the scale range
+    ## (`geom_col()`).
 
 ![](c01-titanic-assignment_files/figure-gfm/q4-task-1.png)<!-- -->
 
 **Observations**:
 
-- Write your observations here.
-  - I noticed that proportionally, the amount of people who survived
-    decreases from 1st to second class. This is different than the prior
-    plots, insinuating that the reason the amount of third class
-    passengers who survived was so high is because of the sheer volume
-    of those passengers, even though per capita they had a much lower
-    chance of survival. On the flip side, numerically there were not
-    many survivors from second class but this can be attributed to a
-    smaller population, as the proportion of second class survivors is
-    high. The proportion of survivors decreases the lower the class you
-    get, dropping off steeply after 2nd class. Further, within all the
-    classes the majority of survivors are women, which implies they were
-    given precedence across all classes.  
+- Write your observations here. -I noticed that most of the survivors
+  are from first and second class. -According to this graph, the only
+  deaths were in third class and the crew.
+  - Most fatalities are in third class.
 - Is there anything *fishy* going on in your plot?
-- I noticed that even though a famous event of the Titanic is women and
-  children getting precedence on the boats, the proportions of women and
-  men surviving are fairly equal throughout the classes.
+- I noticed that the graph says that all 1st and 2nd class passengers
+  survived, while that is not true.
 
 ### **q5** Create a plot showing the group-proportion of occupants who *did* survive, along with aesthetics for `Class`, `Sex`, *and* `Age`. Document your observations below.
 
@@ -245,8 +243,10 @@ additional variables!
 
 ``` r
 survivors <- df_prop %>% filter(Survived == "Yes")
-ggplot(survivors, aes(fill = Sex, x = Class, y = Prop)) +
-  geom_col(position = "Stack") +
+
+survivors %>% 
+  ggplot(aes(fill = Sex, x = Class, y = Prop)) +
+  geom_col(position = "dodge") +
   facet_grid(Age ~ .)
 ```
 

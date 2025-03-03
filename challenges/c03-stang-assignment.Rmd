@@ -140,7 +140,10 @@ glimpse(df_stang_long)
 ## TASK: Investigate your question from q1 here
 df_stang_long %>% 
   ggplot(aes(x = as.character(angle), y = E)) +
-  geom_boxplot()
+  geom_boxplot() +
+  xlab('Angle (deg)') +
+  ylab('E (Pa)') +
+  labs(title = '                                       E Value vs. Dogbone Angle')
 
 ```
 
