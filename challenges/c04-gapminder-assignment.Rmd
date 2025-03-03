@@ -57,11 +57,18 @@ dataset?
 
 ```{r q0-task}
 ## TASK: Do your "first checks" here!
+glimpse(gapminder)
 ```
 
 **Observations**:
 
 - Write all variable names here
+Country, string representing the name of the country
+Continent, string representing the continent of the country
+Year, integer representing the year the data was taken
+lifeExp, double representing the life expectancy of the country at the specified year
+pop, integer representing the population of a country at the specified year
+gdpPercap, double representing the gdp per capita of the country at the specified year
 
 ### __q1__ Determine the most and least recent years in the `gapminder` dataset.
 
@@ -69,8 +76,12 @@ dataset?
 
 ```{r q1-task}
 ## TASK: Find the largest and smallest values of `year` in `gapminder`
-year_max <- NA_real_
-year_min <- NA_real_
+year_max <- gapminder %>% 
+  pull(3) %>% 
+  max()
+year_min <- gapminder %>% 
+  pull(3) %>% 
+  min()
 ```
 
 Use the following test to check your work.
@@ -96,26 +107,36 @@ You may encounter difficulties in visualizing these data; if so document your ch
 
 ```{r q2-task}
 ## TASK: Create a visual of gdpPercap vs continent
+gapminder %>% 
+  filter(year == year_min) %>% 
+  ggplot(aes(x = continent, y = gdpPercap)) +
+  geom_boxplot(stat = "boxplot") + 
+  scale_y_log10()
 ```
 
 **Observations**:
 
-- Write your observations here
+- I noticed that there are a few outliers from the data, 2 in the Americas and 1 in Asia. I also noticed that Oceania has the highest GDP per capita.
 
 **Difficulties & Approaches**:
 
-- Write your challenges and your approach to solving them
+- I initially tried a barplot of average GDP for this visualization, but realized it left out a lot of data. Thus, I reframed the data as a boxplot. 
 
 ### __q3__ You should have found *at least* three outliers in q2 (but possibly many more!). Identify those outliers (figure out which countries they are).
 
 ```{r q3-task}
 ## TASK: Identify the outliers from q2
+gapminder %>% 
+  filter(year == year_min) %>% 
+  filter(continent == "Americas" | continent == "Asia") %>% 
+  arrange(desc(gdpPercap))
+
 ```
 
 **Observations**:
 
 - Identify the outlier countries from q2
-  - (Your response here)
+  - Kuwait, United States, Canada
 
 *Hint*: For the next task, it's helpful to know a ggplot trick we'll learn in an upcoming exercise: You can use the `data` argument inside any `geom_*` to modify the data that will be plotted *by that geom only*. For instance, you can use this trick to filter a set of points to label:
 
@@ -139,11 +160,19 @@ gapminder %>%
 
 ```{r q4-task}
 ## TASK: Create a visual of gdpPercap vs continent
+gapminder %>% 
+  filter(year == year_min | year == year_max) %>% 
+  ggplot(aes(x = continent, y = gdpPercap, fill = factor(year))) +
+  geom_boxplot(position = position_dodge(width = .8)) + 
+  geom_point(data = . %>% filter(country %in% c("United States", "Canada", "Kuwait")),
+    mapping = aes(color = country), position = position_dodge(width = .8)) + 
+  scale_y_log10()
+
 ```
 
 **Observations**:
 
-- Write your observations here
+- All the GDP per capitas increased over the years. Asia had the largest increase in GDP out of the continents. 
 
 # Your Own EDA
 <!-- -------------------------------------------------- -->
@@ -154,20 +183,34 @@ Now it's your turn! We just went through guided EDA considering the GDP per capi
 
 ```{r q5-task1}
 ## TASK: Your first graph
+gapminder %>% 
+  filter(year == year_min | year == year_max) %>% 
+  ggplot(aes(x = continent, y = lifeExp, fill = factor(year))) +
+  geom_boxplot(position = position_dodge(width = .8))
 ```
 
-- (Your notes and observations here)
+- Life expectancy has uniformly gone up across the continents. The life expectancy in Asia has gone up the most, just like the GDP per capita. 
 
 ```{r q5-task2}
 ## TASK: Your second graph
+gapminder %>% 
+  filter(continent == "Europe") %>% 
+  group_by(year) %>% 
+  summarise(gdp = mean(gdpPercap)) %>% 
+  ggplot(aes(x = year, y = gdp)) + 
+  geom_bar(stat = "identity")
 ```
 
-- (Your notes and observations here)
+- Average GDP per capita worldwide has increased by about $2500 every 5 years.  
 
 ```{r q5-task3}
 ## TASK: Your third graph
+gapminder %>% 
+  ggplot(aes(x = year, y = gdpPercap, fill = continent)) + 
+  geom_bar(stat = "identity") 
+
 ```
 
-- (Your notes and observations here)
+- While total GDP worldwide had increased, proportions between the continents has largely remained the same. 
 
 
