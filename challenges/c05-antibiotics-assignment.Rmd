@@ -75,7 +75,11 @@ For all five of the visuals, you must show information on *all 16 bacteria*. For
 In this visual you must show *all three* effectiveness values for *all 16 bacteria*. This means **it must be possible to identify each of the 16 bacteria by name.** You must also show whether or not each bacterium is Gram positive or negative.
 
 ```{r q1.1}
-# WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  ggplot(aes(x = bacteria, y = value, fill = antibiotic)) +
+  geom_col(position = "dodge" , aes(color = gram)) +
+  coord_flip()
 ```
 
 #### Visual 2 (All variables)
@@ -85,7 +89,13 @@ In this visual you must show *all three* effectiveness values for *all 16 bacter
 Note that your visual must be *qualitatively different* from *all* of your other visuals.
 
 ```{r q1.2}
-# WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  ggplot(aes(x = bacteria, y = value)) +
+  geom_col(position = "dodge", aes(fill = gram)) +
+  facet_grid(antibiotic ~ .) + 
+  coord_flip()
+  
 ```
 
 #### Visual 3 (Some variables)
@@ -95,7 +105,11 @@ In this visual you may show a *subset* of the variables (`penicillin`, `streptom
 Note that your visual must be *qualitatively different* from *all* of your other visuals.
 
 ```{r q1.3}
-# WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  filter(antibiotic == "streptomycin") %>% 
+  ggplot(aes(x = value, fill = bacteria)) +
+  geom_bar(position = "stack", stat = "count")
 ```
 
 #### Visual 4 (Some variables)
@@ -106,6 +120,10 @@ Note that your visual must be *qualitatively different* from *all* of your other
 
 ```{r q1.4}
 # WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  ggplot(aes(x = bacteria, y = value)) +
+  geom_point(aes(color = antibiotic))
 ```
 
 #### Visual 5 (Some variables)
@@ -116,6 +134,12 @@ Note that your visual must be *qualitatively different* from *all* of your other
 
 ```{r q1.5}
 # WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  ggplot(aes(x = bacteria, y = value, color = antibiotic)) +
+  geom_point() + 
+  facet_grid(gram ~ .)
+  
 ```
 
 ### __q2__ Assess your visuals
@@ -132,11 +156,12 @@ There are **two questions** below; use your five visuals to help answer both Gui
 
 *Observations*
 - What is your response to the question above?
-  - (Write your response here)
+  - Penicillin is effective against many bacteria, but requires a higher dosage. It is also mostly negative gram. Streptomycin is also effective against many bacteria, but requires a very low dose. It is a pretty even mix of negative and positive gram. Similarly, Neomycin is effective with a low dose and is pretty evently split between negative and positive gram. 
+  
 - Which of your visuals above (1 through 5) is **most effective** at helping to answer this question?
-  - (Write your response here)
+  - Visual 2
 - Why?
-  - (Write your response here)
+  - Visual 2 offered comparison for all the antibiotics/bacteria as well as their gram status. This allowed for a more in-depth analysis than the other figures. Figure 1 also offered these metrics, but in a more difficult to read way. 
 
 #### Guiding Question 2
 
@@ -146,11 +171,13 @@ In 1974 *Diplococcus pneumoniae* was renamed *Streptococcus pneumoniae*, and in 
 
 *Observations*
 - What is your response to the question above?
-  - (Write your response here)
+  - Perhaps it was renamed because Diplococcus pneumoniae is of positive gram like the streptococcus bacteria, so it is related to it.
+  
 - Which of your visuals above (1 through 5) is **most effective** at helping to answer this question?
-  - (Write your response here)
+  - 1
+  
 - Why?
-  - (Write your response here)
+  - 1 helped a lot because the bacteria was grouped together on the y-axis and thus easier to compare to one another. It also offered all the distinguishing factors being considered, so I could see how Diplococcus pneumoniae could be related to streptococcus. 
 
 
 # References

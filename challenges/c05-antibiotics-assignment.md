@@ -158,8 +158,14 @@ In this visual you must show *all three* effectiveness values for *all
 is Gram positive or negative.
 
 ``` r
-# WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  ggplot(aes(x = bacteria, y = value, fill = antibiotic)) +
+  geom_col(position = "dodge" , aes(color = gram)) +
+  coord_flip()
 ```
+
+![](c05-antibiotics-assignment_files/figure-gfm/q1.1-1.png)<!-- -->
 
 #### Visual 2 (All variables)
 
@@ -172,8 +178,15 @@ Note that your visual must be *qualitatively different* from *all* of
 your other visuals.
 
 ``` r
-# WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  ggplot(aes(x = bacteria, y = value)) +
+  geom_col(position = "dodge", aes(fill = gram)) +
+  facet_grid(antibiotic ~ .) + 
+  coord_flip()
 ```
+
+![](c05-antibiotics-assignment_files/figure-gfm/q1.2-1.png)<!-- -->
 
 #### Visual 3 (Some variables)
 
@@ -185,8 +198,14 @@ Note that your visual must be *qualitatively different* from *all* of
 your other visuals.
 
 ``` r
-# WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  filter(antibiotic == "streptomycin") %>% 
+  ggplot(aes(x = value, fill = bacteria)) +
+  geom_bar(position = "stack", stat = "count")
 ```
+
+![](c05-antibiotics-assignment_files/figure-gfm/q1.3-1.png)<!-- -->
 
 #### Visual 4 (Some variables)
 
@@ -199,7 +218,13 @@ your other visuals.
 
 ``` r
 # WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  ggplot(aes(x = bacteria, y = value)) +
+  geom_point(aes(color = antibiotic))
 ```
+
+![](c05-antibiotics-assignment_files/figure-gfm/q1.4-1.png)<!-- -->
 
 #### Visual 5 (Some variables)
 
@@ -212,7 +237,14 @@ your other visuals.
 
 ``` r
 # WRITE YOUR CODE HERE
+df_antibiotics %>% 
+  pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  ggplot(aes(x = bacteria, y = value, color = antibiotic)) +
+  geom_point() + 
+  facet_grid(gram ~ .)
 ```
+
+![](c05-antibiotics-assignment_files/figure-gfm/q1.5-1.png)<!-- -->
 
 ### **q2** Assess your visuals
 
@@ -233,10 +265,22 @@ opportunity to think about why this is.**
 > How do the three antibiotics vary in their effectiveness against
 > bacteria of different genera and Gram stain?
 
-*Observations* - What is your response to the question above? - (Write
-your response here) - Which of your visuals above (1 through 5) is
-**most effective** at helping to answer this question? - (Write your
-response here) - Why? - (Write your response here)
+*Observations* - What is your response to the question above? -
+Penicillin is effective against many bacteria, but requires a higher
+dosage. It is also mostly negative gram. Streptomycin is also effective
+against many bacteria, but requires a very low dose. It is a pretty even
+mix of negative and positive gram. Similarly, Neomycin is effective with
+a low dose and is pretty evently split between negative and positive
+gram.
+
+- Which of your visuals above (1 through 5) is **most effective** at
+  helping to answer this question?
+  - Visual 2
+- Why?
+  - Visual 2 offered comparison for all the antibiotics/bacteria as well
+    as their gram status. This allowed for a more in-depth analysis than
+    the other figures. Figure 1 also offered these metrics, but in a
+    more difficult to read way.
 
 #### Guiding Question 2
 
@@ -247,10 +291,18 @@ and in 1984 *Streptococcus fecalis* was renamed *Enterococcus fecalis*
 > Why was *Diplococcus pneumoniae* was renamed *Streptococcus
 > pneumoniae*?
 
-*Observations* - What is your response to the question above? - (Write
-your response here) - Which of your visuals above (1 through 5) is
-**most effective** at helping to answer this question? - (Write your
-response here) - Why? - (Write your response here)
+*Observations* - What is your response to the question above? - Perhaps
+it was renamed because Diplococcus pneumoniae is of positive gram like
+the streptococcus bacteria, so it is related to it.
+
+- Which of your visuals above (1 through 5) is **most effective** at
+  helping to answer this question?
+  - 1
+- Why?
+  - 1 helped a lot because the bacteria was grouped together on the
+    y-axis and thus easier to compare to one another. It also offered
+    all the distinguishing factors being considered, so I could see how
+    Diplococcus pneumoniae could be related to streptococcus.
 
 # References
 
