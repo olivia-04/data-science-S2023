@@ -111,8 +111,8 @@ Pick a sample size $n$ and generate $n$ points *uniform randomly* in the square 
 
 ```{r q1-task}
 ## TASK: Choose a sample size and generate samples
-n <- NA_real_ # Choose a sample size
-df_q1 <- NA # Generate the data
+n <- 100 # Choose a sample size
+df_q1 <- tibble(x = runif(n, min = 0, max = 1), y = runif(n, min = 0, max = 1)) # Generate the data
 ```
 
 Use the following to check that you've used the correct variable names. (NB. This does not check correctness.)
@@ -147,7 +147,10 @@ Answer the questions below.
 ```{r q2-task}
 ## TASK: Finish implementing this function
 stat <- function(x, y) {
-  # TODO: Finish implementing this function
+  # # TODO: Finish implementing this function
+  rad = x^2 + y^2
+
+  ifelse(rad<=1,4,0)
 }
 ```
 
@@ -158,20 +161,20 @@ Implement your own assert statements. They should pass using your implementation
 
 # Check the value for points *inside* the circle
 assertthat::assert_that(
-  # tibble(x = ?, y = ?) %>% # Pick a point *inside* the circle
+   tibble(x = 0, y = 0) %>% # Pick a point *inside* the circle
     mutate(stat = stat(x, y)) %>% 
     pull(stat) %>% 
-    .[[1]] ==
+    .[[1]] == 4,
   # ???, # Write the correct value of stat() here
   msg = "Incorrect value when a point is inside the circle"
 )
 
 # Check the value for points *outside* the circle
 assertthat::assert_that(
-  # tibble(x = ?, y = ?) %>% # Pick a point *outside* the circle
+  tibble(x = 1, y = 1) %>% # Pick a point *outside* the circle
     mutate(stat = stat(x, y)) %>% 
     pull(stat) %>% 
-    .[[1]] ==
+    .[[1]] == 0,
   # ???, # Write the correct value of stat() here
   msg = "Incorrect value when a point is outside the circle"
 )
@@ -181,10 +184,9 @@ print("Your assertions passed, but make sure they're checking the right thing!")
 *Observations*
 
 - You chose a correct value of `stat(x, y)` when `x, y` is *outside* the circle. Why did you choose this value?
-  - (Justify your value here)
+  - I chose (1,1) because it is an edge case, i.e. when the coordinates are maximum value
 - You chose a correct value of `stat(x, y)` when `x, y` is *inside* the circle. Why did you choose this value?
-  - (Justify your value here)
-
+  - Similarly, I chose (0,0) because it is an edge case when the coordinates are at a minimum value. 
 ### __q3__ Estimate $\pi$
 
 Using your data in `df_q1`, estimate $\pi$.
@@ -193,6 +195,7 @@ Using your data in `df_q1`, estimate $\pi$.
 ## TASK: Estimate pi using your data from q1
 df_q3 <- 
   df_q1 %>% 
+    summarise(pi_est = mean(stat(x,y)))
   # TODO: Estimate pi as the column `pi_est`
 df_q3
 ```
@@ -237,6 +240,7 @@ df_q4 <-
           # Estimate pi (pi_est) using the resampled data;
           # this should be *identical* to the
           # code you wrote for q3
+          summarise(pi_est = mean(stat(x,y))) %>% 
           pull(pi_est)
       }
     )
@@ -251,7 +255,7 @@ df_q4 %>%
 *Observations*
 
 - What is a range of plausible values, based on the sampling distribution you've generated?
-  - (Your response here)
+  - The range of plausible values range between roughly 2.5 and 3.75
 
 ### __q5__ Bootstrap percentile confidence interval
 
@@ -265,8 +269,9 @@ df_q5 <-
   df_q4 %>% 
   summarize(
     # TODO: Compute pi_lo and pi_up
-    # pi_lo = ?
-    # pi_up = ?
+    alpha = .05,
+    pi_lo = quantile(pi_est, alpha/2),
+    pi_up = quantile(pi_est, 1-alpha/2)
   )
 
 df_q5
@@ -282,21 +287,31 @@ Compute a CLT-based confidence interval for $\pi$ at the 95% confidence level (`
 
 ```{r q6-task}
 df_q1 %>%
+  mutate(stat_val = stat(x,y)) %>% 
+  summarise(mean = mean(stat_val), sd = sd(stat_val)) %>% 
+  mutate(
+    lo = mean - 1.96*sd/sqrt(n),
+    up = mean + 1.96*sd/sqrt(n)
+  ) %>% 
+  glimpse()
+  
 ```
 
 **Observations**:
 
 - Does your intervals include the true value of $\pi$?
   - (Bootstrap CI: yes or no?)
+  Yes
   - (CLT CI: yes or no?)
+  Yes
+  
 - How closely do your bootstrap CI and CLT CI agree?
-  - (Your answer here)
+  - My bootstrap CI and CLT CI are within .02 of one another
+  
 - Comment on the width of your CI(s). Would your estimate of $\pi$ be good enough for roughly estimating an area (e.g., to buy enough paint for an art project)? Would your estimate of $\pi$ be good enough for precisely calculating a trajectory (e.g., sending a rocket into orbit)?
-  - (Good enough as a rough estimate?)
-  - (Good enough as a precise estimate?)
+  It would be good enough as a rough estimate
 - What would be a *valid* way to make your CI more narrow?
-  - (Your answer here)
-
+  - A valid way to make your CI more narrow would be to increase the value of alpha
 # References
 <!-- -------------------------------------------------- -->
 

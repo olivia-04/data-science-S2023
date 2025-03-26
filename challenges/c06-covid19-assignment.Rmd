@@ -88,7 +88,7 @@ That's the high-level view; now let's dig into the details.
 
 ```{r q1-task}
 ## TASK: Load the census bureau data with the following tibble name.
-df_pop <- read.csv("ACSDT5Y2018.B01003-Data.csv", skip = 1)
+df_pop <- read_csv("ACSDT5Y2018.B01003-Data.csv", skip = 1)
 df_pop
 ```
 
@@ -160,7 +160,7 @@ Use the following test to check your answer.
 ## Check known county
 assertthat::assert_that(
               (df_q3 %>%
-              filter(str_detect(`Geographic.Area.Name`, "Autauga County")) %>%
+              filter(str_detect(`Geographic Area Name`, "Autauga County")) %>%
               pull(fips)) == "01001"
             )
 print("Very good!")
