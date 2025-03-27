@@ -113,21 +113,33 @@ print("Very good!")
 ##
 glimpse(df_stang_long)
 
+df_stang_long %>% 
+  distinct(alloy)
+
+df_stang_long %>% 
+distinct(E,nu)
+
+df_stang_long %>% 
+  distinct(angle)
+
+df_stang_long %>% 
+  distinct(thick)
+
 ```
 
 **Observations**:
 
 - Is there "one true value" for the material properties of Aluminum?
-  - No, the values all hover around the same threshold but are not the same
+  - No, the values all hover around the same threshold but are not the same. I found the distinct combinations of E and nu values present in the dataset and there are 25 entries. 
   
 - How many aluminum alloys are in this dataset? How do you know?
-  - All of the alloys are 8 alloys in this dataset after filtering. I know because there are 8 sets of data for each column.
+  - All of the alloys are al_24st in this dataset after filtering. I know because I found the distinct alloys in the data set and there is only one, al_24st 
   
 - What angles were tested?
-  - 0 degrees, 45 degrees, and 90 degrees. 
+  - 0 degrees, 45 degrees, and 90 degrees. I found the distinct angle values present in the dataset and there are 3 entries: 0, 45, and 90 degrees.
   
 - What thicknesses were tested?
-  - .022, .032, .064, .081
+  - .022, .032, .064, .081 are the distinct thickness values found in the dataset as seen above. 
   
 - What angle has the most variation in E value?
 
@@ -169,9 +181,10 @@ df_stang_long %>%
 **Observations**:
 
 - Does this graph support or contradict the claim above?
-  - This graph does not support the claim above, as every thickness value is huddled around the same E/nu value. In fact, the highest thickness seems to be at the lower of the grouping. 
+  - This graph does not support the claim above. Even though thicknesses .064, .032, and .022 values are huddled around the same E/nu value, the highest thickness value .081 seems to be at the lower of the grouping. This suggests the thickness had an effect on the material properties somehow. 
+  
 - Is this evidence *conclusive* one way or another?
-  - This evidence is not conclusive, as we may need more data points and information on the material makeup of each of the plates to draw a more nuanced conclusion. 
+  - This evidence is not conclusive, as we may need more data points and information on the material makeup of each of the plates to draw a more nuanced conclusion. For example, a separate sample of .081 thickness aluminum may be helpful to see if the current .081 samples are an outlier. Also, there is notable variation among the .022, .032, and .064 thicknesses even though they are in the same vicinity. More samples would show if there is a trend to this variation or if it is truly random. 
 
 # References
 <!-- -------------------------------------------------- -->
