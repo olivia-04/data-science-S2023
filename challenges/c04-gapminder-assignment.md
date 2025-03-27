@@ -275,7 +275,8 @@ gapminder %>%
   ggplot(aes(x = continent, y = gdpPercap, fill = factor(year))) +
   geom_boxplot(position = position_dodge(width = .8)) + 
   geom_point(data = . %>% filter(country %in% c("United States", "Canada", "Kuwait")),
-    mapping = aes(color = country), position = position_dodge(width = .8)) + 
+    mapping = aes(color = country),
+    position = position_dodge(width = .8)) + 
   scale_y_log10()
 ```
 
@@ -307,8 +308,9 @@ gapminder %>%
 
 ![](c04-gapminder-assignment_files/figure-gfm/q5-task1-1.png)<!-- -->
 
-- Life expectancy has uniformly gone up across the continents. The life
-  expectancy in Asia has gone up the most, just like the GDP per capita.
+- Median life expectancy has increased across the continents. The median
+  life expectancy in Asia has gone up the most, just as in GDP per
+  capita.
 
 ``` r
 ## TASK: Your second graph
@@ -322,7 +324,7 @@ gapminder %>%
 
 ![](c04-gapminder-assignment_files/figure-gfm/q5-task2-1.png)<!-- -->
 
-- Average GDP per capita worldwide has increased by about \$2500 every 5
+- Average GDP per capita in Europe has increased by about \$2500 every 5
   years.
 
 ``` r
