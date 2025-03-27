@@ -238,18 +238,78 @@ glimpse(df_stang_long)
     ## $ E     <dbl> 10600, 10700, 10500, 10600, 10500, 10700, 10400, 10400, 10300, 1…
     ## $ nu    <dbl> 0.321, 0.329, 0.310, 0.323, 0.331, 0.323, 0.329, 0.318, 0.322, 0…
 
+``` r
+df_stang_long %>% 
+  distinct(alloy)
+```
+
+    ## # A tibble: 1 × 1
+    ##   alloy  
+    ##   <chr>  
+    ## 1 al_24st
+
+``` r
+df_stang_long %>% 
+distinct(E,nu)
+```
+
+    ## # A tibble: 25 × 2
+    ##        E    nu
+    ##    <dbl> <dbl>
+    ##  1 10600 0.321
+    ##  2 10700 0.329
+    ##  3 10500 0.31 
+    ##  4 10600 0.323
+    ##  5 10500 0.331
+    ##  6 10700 0.323
+    ##  7 10400 0.329
+    ##  8 10400 0.318
+    ##  9 10300 0.322
+    ## 10 10300 0.319
+    ## # ℹ 15 more rows
+
+``` r
+df_stang_long %>% 
+  distinct(angle)
+```
+
+    ## # A tibble: 3 × 1
+    ##   angle
+    ##   <int>
+    ## 1     0
+    ## 2    45
+    ## 3    90
+
+``` r
+df_stang_long %>% 
+  distinct(thick)
+```
+
+    ## # A tibble: 4 × 1
+    ##   thick
+    ##   <dbl>
+    ## 1 0.022
+    ## 2 0.032
+    ## 3 0.064
+    ## 4 0.081
+
 **Observations**:
 
 - Is there “one true value” for the material properties of Aluminum?
   - No, the values all hover around the same threshold but are not the
-    same
+    same. I found the distinct combinations of E and nu values present
+    in the dataset and there are 25 entries.
 - How many aluminum alloys are in this dataset? How do you know?
-  - All of the alloys are 8 alloys in this dataset after filtering. I
-    know because there are 8 sets of data for each column.
+  - All of the alloys are al_24st in this dataset after filtering. I
+    know because I found the distinct alloys in the data set and there
+    is only one, al_24st
 - What angles were tested?
-  - 0 degrees, 45 degrees, and 90 degrees.
+  - 0 degrees, 45 degrees, and 90 degrees. I found the distinct angle
+    values present in the dataset and there are 3 entries: 0, 45, and 90
+    degrees.
 - What thicknesses were tested?
-  - .022, .032, .064, .081
+  - .022, .032, .064, .081 are the distinct thickness values found in
+    the dataset as seen above.
 - What angle has the most variation in E value?
 
 ## Visualize
@@ -262,7 +322,10 @@ glimpse(df_stang_long)
 ## TASK: Investigate your question from q1 here
 df_stang_long %>% 
   ggplot(aes(x = as.character(angle), y = E)) +
-  geom_boxplot()
+  geom_boxplot() +
+  xlab('Angle (deg)') +
+  ylab('E (Pa)') +
+  labs(title = '                                       E Value vs. Dogbone Angle')
 ```
 
 ![](c03-stang-assignment_files/figure-gfm/q3-task-1.png)<!-- -->
@@ -296,13 +359,20 @@ df_stang_long %>%
 **Observations**:
 
 - Does this graph support or contradict the claim above?
-  - This graph does not support the claim above, as every thickness
-    value is huddled around the same E/nu value. In fact, the highest
-    thickness seems to be at the lower of the grouping.
+  - This graph does not support the claim above. Even though thicknesses
+    .064, .032, and .022 values are huddled around the same E/nu value,
+    the highest thickness value .081 seems to be at the lower of the
+    grouping. This suggests the thickness had an effect on the material
+    properties somehow.
 - Is this evidence *conclusive* one way or another?
   - This evidence is not conclusive, as we may need more data points and
     information on the material makeup of each of the plates to draw a
-    more nuanced conclusion.
+    more nuanced conclusion. For example, a separate sample of .081
+    thickness aluminum may be helpful to see if the current .081 samples
+    are an outlier. Also, there is notable variation among the .022,
+    .032, and .064 thicknesses even though they are in the same
+    vicinity. More samples would show if there is a trend to this
+    variation or if it is truly random.
 
 # References
 
