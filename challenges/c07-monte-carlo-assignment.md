@@ -298,12 +298,14 @@ print("Your assertions passed, but make sure they're checking the right thing!")
 
 - You chose a correct value of `stat(x, y)` when `x, y` is *outside* the
   circle. Why did you choose this value?
-  - I chose (1,1) because it is an edge case, i.e. when the coordinates
-    are maximum value
+  - I chose 0, as it represents that the point is outside of the circle
+    thus no ‘points’ are earned towards the pi calculation.
 - You chose a correct value of `stat(x, y)` when `x, y` is *inside* the
   circle. Why did you choose this value?
-  - Similarly, I chose (0,0) because it is an edge case when the
-    coordinates are at a minimum value. \### **q3** Estimate $\pi$
+  - I chose 4, as the above equation represents the proportion of points
+    inside the circle as multiplied by 4
+
+    \### **q3** Estimate $\pi$
 
 Using your data in `df_q1`, estimate $\pi$.
 
@@ -319,7 +321,7 @@ df_q3
     ## # A tibble: 1 × 1
     ##   pi_est
     ##    <dbl>
-    ## 1   2.96
+    ## 1   3.24
 
 Use the following to check that you’ve used the correct variable names.
 (NB. This does not check correctness.)
@@ -426,7 +428,7 @@ df_q5
     ## # A tibble: 1 × 3
     ##   alpha pi_lo pi_up
     ##   <dbl> <dbl> <dbl>
-    ## 1  0.05   2.6  3.28
+    ## 1  0.05  2.92  3.52
 
 ### **q6** CLT confidence interval
 
@@ -454,10 +456,10 @@ df_q1 %>%
 
     ## Rows: 1
     ## Columns: 4
-    ## $ mean <dbl> 2.96
-    ## $ sd   <dbl> 1.763376
-    ## $ lo   <dbl> 2.614378
-    ## $ up   <dbl> 3.305622
+    ## $ mean <dbl> 3.24
+    ## $ sd   <dbl> 1.577109
+    ## $ lo   <dbl> 2.930887
+    ## $ up   <dbl> 3.549113
 
 **Observations**:
 
@@ -472,8 +474,12 @@ df_q1 %>%
   precisely calculating a trajectory (e.g., sending a rocket into
   orbit)? It would be good enough as a rough estimate
 - What would be a *valid* way to make your CI more narrow?
-  - A valid way to make your CI more narrow would be to increase the
-    value of alpha \# References
+  - A valid way to make your CI more narrow would be to increase your
+    sample size. This would mean the interval bounds are divided by a
+    higher sqrt of n, and thus will be smaller in their deviation from
+    the mean
+
+    . \# References
     <!-- -------------------------------------------------- -->
 
 \[1\] Dumoulin and Thouin, “A Ballistic Monte Carlo Approximation of Pi”
