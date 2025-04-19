@@ -134,7 +134,7 @@ you still need to count, because your numbers *will* be different!
   - 97.112%
 - Are there any sources of *real* uncertainty in the percent occupied
   you calculated?
-  - Not really, unless the unoccupied houses are misreported
+  - No, as the entire population was accounted for
 - Are there any sources of *erroneous* uncertainty in the percent
   occupied you calculated?
   - Perhaps if I miscounted the unoccupied houses, I also rounded off
@@ -252,7 +252,9 @@ print("Very good!")
   - Sorensen
 - Is this sample representative of *all* houses in Helvig? Why or why
   not?
-  - No as it is only a sample of the house
+  - No as it is only a sample of the houses next to each other. This
+    could cause bias in the data set, for example if families with a
+    shared last name live near one another.
 
 In the exercises, we talked about the importance of random sampling. In
 the previous challenge, we were able to *simulate* a random sample by

@@ -76,7 +76,7 @@ NB. When Zach counted the homes (on 2025-01-08), he found 20 unoccupied out of 5
 -   What percent of homes are *occupied*?
     -   97.112%
 -   Are there any sources of *real* uncertainty in the percent occupied you calculated?
-    -   Not really, unless the unoccupied houses are misreported
+    -   No, as the entire population was accounted for
 -   Are there any sources of *erroneous* uncertainty in the percent occupied you calculated?
     -   Perhaps if I miscounted the unoccupied houses, I also rounded off the percentage at the thousandths place
 
@@ -133,7 +133,7 @@ print("Very good!")
 -   What last name is most prevalent in `df_sample_seq`?
     -   Sorensen
 -   Is this sample representative of *all* houses in Helvig? Why or why not?
-    -   No as it is only a sample of the house
+    -   No as it is only a sample of the houses next to each other. This could cause bias in the data set, for example if families with a shared last name live near one another.
 
 In the exercises, we talked about the importance of random sampling. In the previous challenge, we were able to *simulate* a random sample by running a few lines of code. But in the real world, we have to work harder to gather a random sample. We'll do this in two stages: *plan* then *collect*.
 
