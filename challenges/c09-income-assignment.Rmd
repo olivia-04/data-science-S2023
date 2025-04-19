@@ -283,7 +283,7 @@ In the next task you'll investigate the relationship between population and unce
 
 ```{r q7-task}
 df_data %>% 
-  ggplot(aes(x = population_estimate, y = income_SE)) +
+  ggplot(aes(x = log(population_estimate), y = log(income_SE))) +
   geom_point()
 ```
 

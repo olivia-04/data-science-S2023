@@ -483,7 +483,7 @@ and uncertainty.
 
 ``` r
 df_data %>% 
-  ggplot(aes(x = population_estimate, y = income_SE)) +
+  ggplot(aes(x = log(population_estimate), y = log(income_SE))) +
   geom_point()
 ```
 
