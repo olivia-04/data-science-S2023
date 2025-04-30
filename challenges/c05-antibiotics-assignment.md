@@ -160,8 +160,10 @@ is Gram positive or negative.
 ``` r
 df_antibiotics %>% 
   pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
-  ggplot(aes(x = bacteria, y = value, fill = antibiotic)) +
+  mutate(bacteria = fct_reorder(bacteria, value)) %>% 
+  ggplot(aes(x = bacteria, y = log(value), fill = antibiotic)) +
   geom_col(position = "dodge" , aes(color = gram)) +
+  geom_hline(yintercept = 0.1, color = 'black', linetype = "longdash") +
   coord_flip()
 ```
 
@@ -180,7 +182,9 @@ your other visuals.
 ``` r
 df_antibiotics %>% 
   pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
-  ggplot(aes(x = bacteria, y = value)) +
+  mutate(bacteria = fct_reorder(bacteria, value)) %>% 
+  ggplot(aes(x = bacteria, y = log(value))) +
+  geom_hline(yintercept = 0.1, color = 'black', linetype = "longdash") +
   geom_col(position = "dodge", aes(fill = gram)) +
   facet_grid(antibiotic ~ .) + 
   coord_flip()
@@ -200,6 +204,7 @@ your other visuals.
 ``` r
 df_antibiotics %>% 
   pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
+  mutate(bacteria = fct_reorder(bacteria, value)) %>% 
   filter(antibiotic == "streptomycin") %>% 
   ggplot(aes(x = value, fill = bacteria)) +
   geom_bar(position = "stack", stat = "count")
@@ -220,8 +225,9 @@ your other visuals.
 # WRITE YOUR CODE HERE
 df_antibiotics %>% 
   pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
-  ggplot(aes(x = bacteria, y = value)) +
-  geom_point(aes(color = antibiotic))
+  ggplot(aes(x = antibiotic, y = log(value), color = gram), position = 'jitter') +
+  geom_point() +
+  geom_hline(yintercept = 0.1, color = 'black', linetype = "longdash")
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/q1.4-1.png)<!-- -->
@@ -239,9 +245,11 @@ your other visuals.
 # WRITE YOUR CODE HERE
 df_antibiotics %>% 
   pivot_longer(cols = penicillin:neomycin, names_to = "antibiotic") %>% 
-  ggplot(aes(x = bacteria, y = value, color = antibiotic)) +
+  mutate(bacteria = fct_reorder(bacteria, value)) %>% 
+  ggplot(aes(x = bacteria, y = log(value), color = antibiotic)) +
   geom_point() + 
-  facet_grid(gram ~ .)
+  facet_grid(gram ~ .) +
+  geom_hline(yintercept = 0.1)
 ```
 
 ![](c05-antibiotics-assignment_files/figure-gfm/q1.5-1.png)<!-- -->
@@ -266,12 +274,14 @@ opportunity to think about why this is.**
 > bacteria of different genera and Gram stain?
 
 *Observations* - What is your response to the question above? -
-Penicillin is effective against many bacteria, but requires a higher
-dosage. It is also mostly negative gram. Streptomycin is also effective
-against many bacteria, but requires a very low dose. It is a pretty even
-mix of negative and positive gram. Similarly, Neomycin is effective with
-a low dose and is pretty evently split between negative and positive
-gram.
+Penicillin is effective against some bacteria, but requires a higher
+dosage. As MIC must be lower for effective human treatment, at most a .1
+concentration, this implies that penicillin is ineffective for many
+bacteria strains including all the gram negative bacterias. Streptomycin
+is also effective against many bacteria, but requires a very low dose.
+It is a pretty even mix of negative and positive gram. Similarly,
+Neomycin is effective with a low dose and is pretty evently split
+between negative and positive gram.
 
 - Which of your visuals above (1 through 5) is **most effective** at
   helping to answer this question?
@@ -291,7 +301,7 @@ and in 1984 *Streptococcus fecalis* was renamed *Enterococcus fecalis*
 > Why was *Diplococcus pneumoniae* was renamed *Streptococcus
 > pneumoniae*?
 
-*Observations* - What is your response to the question above? - Perhaps
+*Observati ons* - What is your response to the question above? - Perhaps
 it was renamed because Diplococcus pneumoniae is of positive gram like
 the streptococcus bacteria, so it is related to it.
 
